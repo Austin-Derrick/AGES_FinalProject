@@ -28,17 +28,8 @@ public class PickupObject : MonoBehaviour
     {
         if (isCarrying)
         {
-            CheckRotate();
-            if (isRotating)
-            {
-                RotateObject(carriedObject);
-            }
-            else
-            {
-                Carry(carriedObject);
-                CheckDrop();
-                CheckThrow();
-            }
+            //Carry(carriedObject);
+            //CheckDrop();
         }
         else
         {
@@ -46,56 +37,9 @@ public class PickupObject : MonoBehaviour
         }
     }
 
-    private void RotateObject(GameObject o)
-    {
-        
-        float mouseX = Input.GetAxis("Mouse X") * rotationSpeed;
-        float mouseY = Input.GetAxis("Mouse Y") * rotationSpeed;
+    
 
-        o.transform.Rotate(Vector3.down, mouseX);
-        o.transform.Rotate(Vector3.right, mouseY);
-    }
-
-    void CheckRotate()
-    {
-        if (Input.GetMouseButton(1))
-        {
-            isRotating = true;
-            controller.enabled = false;
-        }
-        else
-        {
-            controller.enabled = true;
-            isRotating = false;
-
-        }
-    }
-
-    void CheckThrow()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            isCarrying = false;
-            objectRB.isKinematic = false;
-            objectRB.AddForce(gameObject.transform.forward * (65 / objectRB.mass), ForceMode.Impulse);
-            carriedObject = null;
-        }
-    }
-
-    void Carry(GameObject o)
-    {
-        objectRB = carriedObject.GetComponent<Rigidbody>();
-        objectRB.isKinematic = true;
-        Vector3 projectedPostion = mainCamera.transform.position + mainCamera.transform.forward * distance;
-        o.transform.position = Vector3.Lerp(o.transform.position, projectedPostion, Time.deltaTime * (smooth / objectRB.mass));
-        // use systems.diagnostics.debug.writeline(); to debug
-        if (projectedPostion.y / 4 < 0.1)
-        {
-            BoxCollider collider = o.GetComponent<BoxCollider>();
-            o.transform.position = new Vector3(o.transform.position.x, 0 + o.transform.localScale.y /2, o.transform.position.z);
-        }
-        distance = distance + (Input.GetAxisRaw("Mouse ScrollWheel") * (6 / objectRB.mass));
-    }
+    
 
     void Pickup()
     {
@@ -118,13 +62,5 @@ public class PickupObject : MonoBehaviour
         }
     }
 
-    void CheckDrop()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            isCarrying = false;
-            objectRB.isKinematic = false;
-            carriedObject = null;
-        }
-    }
+    
 }
