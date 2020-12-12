@@ -30,6 +30,7 @@ public class PickupObject : MonoBehaviour
         {
             Carry(carriedObject);
             CheckDrop();
+            CheckThrow();
         }
         else
         {
@@ -37,6 +38,16 @@ public class PickupObject : MonoBehaviour
         }
     }
 
+    void CheckThrow()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            isCarrying = false;
+            objectRB.isKinematic = false;
+            objectRB.AddForce(gameObject.transform.forward * (65 / objectRB.mass), ForceMode.Impulse);
+            carriedObject = null;
+        }
+    }
 
     void Carry(GameObject o)
     {
