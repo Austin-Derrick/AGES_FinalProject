@@ -28,7 +28,7 @@ public class PickupObject : MonoBehaviour
     {
         if (isCarrying)
         {
-            //Carry(carriedObject);
+            Carry(carriedObject);
             //CheckDrop();
         }
         else
@@ -50,7 +50,7 @@ public class PickupObject : MonoBehaviour
             BoxCollider collider = o.GetComponent<BoxCollider>();
             o.transform.position = new Vector3(o.transform.position.x, 0 + o.transform.localScale.y / 2, o.transform.position.z);
         }
-        //distance = distance + (Input.GetAxisRaw("Mouse ScrollWheel") * 6);
+        distance = distance + (Input.GetAxisRaw("Mouse ScrollWheel") * 6);
     }
 
 
