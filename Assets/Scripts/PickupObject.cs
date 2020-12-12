@@ -19,7 +19,7 @@ public class PickupObject : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        mainCamera = GameObject.FindWithTag("MainCamera");    
+        mainCamera = GameObject.FindWithTag("MainCamera");
 
     }
 
@@ -28,13 +28,46 @@ public class PickupObject : MonoBehaviour
     {
         if (isCarrying)
         {
-            Carry(carriedObject);
-            CheckDrop();
-            CheckThrow();
+            CheckRotate();
+            if (isRotating)
+            {
+                RotateObject(carriedObject);
+            }
+            else
+            {
+                Carry(carriedObject);
+                CheckDrop();
+                CheckThrow();
+            }
         }
         else
         {
             Pickup();
+        }
+    }
+
+    private void RotateObject(GameObject o)
+    {
+
+        float mouseX = Input.GetAxis("Mouse X") * rotationSpeed;
+        float mouseY = Input.GetAxis("Mouse Y") * rotationSpeed;
+
+        o.transform.Rotate(Vector3.down, mouseX);
+        o.transform.Rotate(Vector3.right, mouseY);
+    }
+
+    void CheckRotate()
+    {
+        if (Input.GetMouseButton(1))
+        {
+            isRotating = true;
+            controller.enabled = false;
+        }
+        else
+        {
+            controller.enabled = true;
+            isRotating = false;
+
         }
     }
 
@@ -63,7 +96,6 @@ public class PickupObject : MonoBehaviour
         }
         distance = distance + (Input.GetAxisRaw("Mouse ScrollWheel") * (6 / objectRB.mass));
     }
-
 
     void Pickup()
     {
@@ -95,6 +127,4 @@ public class PickupObject : MonoBehaviour
             carriedObject = null;
         }
     }
-
-
 }
