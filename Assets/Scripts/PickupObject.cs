@@ -54,14 +54,14 @@ public class PickupObject : MonoBehaviour
         objectRB = carriedObject.GetComponent<Rigidbody>();
         objectRB.isKinematic = true;
         Vector3 projectedPostion = mainCamera.transform.position + mainCamera.transform.forward * distance;
-        o.transform.position = Vector3.Lerp(o.transform.position, projectedPostion, Time.deltaTime * smooth);
+        o.transform.position = Vector3.Lerp(o.transform.position, projectedPostion, Time.deltaTime * (smooth / objectRB.mass));
         // use systems.diagnostics.debug.writeline(); to debug
         if (projectedPostion.y / 4 < 0.1)
         {
             BoxCollider collider = o.GetComponent<BoxCollider>();
             o.transform.position = new Vector3(o.transform.position.x, 0 + o.transform.localScale.y / 2, o.transform.position.z);
         }
-        distance = distance + (Input.GetAxisRaw("Mouse ScrollWheel") * 6);
+        distance = distance + (Input.GetAxisRaw("Mouse ScrollWheel") * (6 / objectRB.mass));
     }
 
 
