@@ -29,7 +29,7 @@ public class PickupObject : MonoBehaviour
         if (isCarrying)
         {
             Carry(carriedObject);
-            //CheckDrop();
+            CheckDrop();
         }
         else
         {
@@ -75,5 +75,15 @@ public class PickupObject : MonoBehaviour
         }
     }
 
-    
+    void CheckDrop()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            isCarrying = false;
+            objectRB.isKinematic = false;
+            carriedObject = null;
+        }
+    }
+
+
 }
