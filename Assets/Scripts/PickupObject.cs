@@ -15,7 +15,7 @@ public class PickupObject : MonoBehaviour
     Rigidbody objectRB;
     [SerializeField]
     CameraBehavior controller;
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -78,6 +78,7 @@ public class PickupObject : MonoBehaviour
             isCarrying = false;
             objectRB.isKinematic = false;
             objectRB.AddForce(gameObject.transform.forward * (65 / objectRB.mass), ForceMode.Impulse);
+            carriedObject.GetComponent<Item>().isBeingHeld = false;
             carriedObject = null;
         }
     }
@@ -106,13 +107,18 @@ public class PickupObject : MonoBehaviour
 
             Ray ray = Camera.main.ScreenPointToRay(new Vector3(x, y));
             RaycastHit hitInfo;
-            if (Physics.Raycast(ray, out hitInfo))
+            if (Physics.Raycast(ray, out hitInfo, 10))
             {
-                PickupAble p = hitInfo.collider.GetComponent<PickupAble>();
+                Item p = hitInfo.collider.GetComponent<Item>();
                 if (p != null)
                 {
                     isCarrying = true;
                     carriedObject = p.gameObject;
+                    p.UnFreezeConstraints();
+                }
+                else if (hitInfo.collider.gameObject.CompareTag("Button"))
+                {
+                    hitInfo.collider.gameObject.GetComponent<ResetBallThrow>().ResetArea();
                 }
             }
         }
