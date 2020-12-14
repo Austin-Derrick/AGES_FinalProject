@@ -6,4 +6,6 @@ Using these mechanics, I have made an interesting environment to make the most o
 
 GithubLink: https://github.com/Austin-Derrick/AGES_FinalProject
 
-Youtube video: https://www.youtube.com/watch?v=6iHRDrh0SZY
+Youtube Sprint 2 video: https://www.youtube.com/watch?v=6iHRDrh0SZY
+
+Youtube Final Sprint Video: https://www.youtube.com/watch?v=eY3PiGfIE-M
